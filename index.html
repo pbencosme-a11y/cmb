@@ -57,9 +57,576 @@
             box-shadow: 0 10px 15px -3px rgba(71, 85, 105, 0.3);
         }
         
-       
+        /* Calculator Specific Styles */
+        .calc-card {
+            background: white;
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #1E40AF;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .radio-option {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .radio-option.active {
+            background: #1E40AF;
+            color: white;
+            border-color: #1E40AF;
+        }
+        .radio-option input { display: none; }
+        
+        /* Disabled state for options */
+        .radio-option.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+            color: #94a3b8;
+        }
+
+        .calc-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
     </style>
 </head>
+<body class="bg-slate-100 text-slate-900">
+
+    <!-- Navigation (Header with #99adc4 Background) -->
+    <nav class="sticky top-0 z-50 glass-effect border-b border-slate-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-48"> 
+                <!-- Brand Banner Image Slot -->
+                <a href="#" class="flex items-center h-full py-0 relative z-50"> 
+                    <img src="header-banner.png" alt="CMB Fire Protection" class="h-full w-auto object-contain logo-blend" 
+                          onerror="const p=this.parentElement; if(p){p.style.display='none'; if(p.nextElementSibling)p.nextElementSibling.style.display='flex';}">
+                </a>
+
+                <!-- Fallback if Image Missing -->
+                <div class="hidden items-center">
+                    <div class="bg-blue-800 p-3 rounded-lg shadow-lg">
+                        <i data-lucide="shield" class="h-8 w-8 text-white" stroke-width="2.5"></i>
+                    </div>
+                    <span class="ml-3 text-slate-900 font-bold text-lg">CMB Fire Protection</span>
+                </div>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="#services" class="text-slate-800 hover:text-blue-900 font-bold uppercase text-[15px] tracking-widest transition">Services</a>
+                    <a href="#process" class="text-slate-800 hover:text-blue-900 font-bold uppercase text-[15px] tracking-widest transition">Process</a>
+                    <a href="#estimator" class="text-slate-800 hover:text-blue-900 font-bold uppercase text-[15px] tracking-widest transition">Estimate</a>
+                    <a href="#contact" class="brand-gradient text-white px-10 py-4 rounded-xl font-black uppercase text-sm tracking-widest hover:brightness-110 transition shadow-lg hover:shadow-2xl transform hover:-translate-y-0.5">
+                        Get Quote
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="menu-toggle" class="text-slate-900 p-2 focus:outline-none hover:bg-white/20 rounded-md transition">
+                        <i data-lucide="menu" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-100 border-t border-slate-300 p-8 space-y-6 shadow-2xl">
+            <a href="#services" class="block text-xl font-black text-slate-900 uppercase tracking-tighter hover:text-blue-800 transition">Services</a>
+            <a href="#process" class="block text-xl font-black text-slate-900 uppercase tracking-tighter hover:text-blue-800 transition">Our Process</a>
+            <a href="#estimator" class="block text-xl font-black text-slate-900 uppercase tracking-tighter hover:text-blue-800 transition">Estimate</a>
+            <a href="#contact" class="block w-full brand-gradient text-white text-center py-5 rounded-xl font-black uppercase tracking-widest">Request Quote</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Bluish Gray Theme) -->
+    <header class="relative py-24 lg:py-48 overflow-hidden bg-slate-50">
+        <!-- Richer Bluish-Gray Gradient Overlay -->
+        <div class="absolute inset-0 opacity-40 bg-gradient-to-br from-slate-300 via-slate-100 to-blue-300"></div>
+        <!-- Subtle Grid Overlay -->
+        <div class="absolute inset-0 opacity-5 bg-[linear-gradient(to_right,#00000012_1px,transparent_1px),linear-gradient(to_bottom,#00000012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
+            <div class="max-w-4xl">
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-10">
+                    <div class="inline-flex items-center space-x-2 bg-white border border-slate-300 px-4 py-1.5 rounded-full shadow-sm">
+                        <span class="text-slate-700 text-[10px] font-black uppercase tracking-[0.2em]">NICET Level III Design Certified</span>
+                    </div>
+                    <div class="inline-flex items-center space-x-2 bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full shadow-sm">
+                        <span class="text-blue-700 text-[10px] font-black uppercase tracking-[0.2em]">Partnered Licensed PE Review</span>
+                    </div>
+                </div>
+                
+                <h1 class="text-6xl sm:text-8xl font-black tracking-tight leading-[0.9] mb-10 text-slate-900">
+                    Fire Protection Layouts <br>
+                    <span class="brand-text-gradient">& PE Review</span>
+                </h1>
+                
+                <p class="text-xl text-slate-600 leading-relaxed mb-14 max-w-2xl mx-auto md:mx-0 font-medium">
+                    High-precision fire protection layouts for residential, commercial, and industrial projects. Delivering NICET Level III–designed technical drawings with Professional Engineer review and sealing.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center md:justify-start">
+                    <a href="#contact" class="btn-brand-primary inline-flex items-center justify-center px-12 py-6 text-lg font-black uppercase tracking-widest rounded-xl shadow-lg shadow-blue-900/20">
+                        Start Project
+                        <i data-lucide="chevron-right" class="ml-2"></i>
+                    </a>
+                    <a href="#services" class="border-2 border-slate-400 text-slate-700 inline-flex items-center justify-center px-12 py-6 text-lg font-black uppercase tracking-widest rounded-xl hover:bg-slate-200 hover:border-slate-500 transition-all">
+                        Services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Brand Stats Section -->
+    <div class="bg-slate-100 border-b border-slate-300">
+        <div class="max-w-7xl mx-auto px-4 py-14">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center md:text-left">
+                <div class="border-l-4 border-slate-500 pl-6">
+                    <p class="text-slate-700 font-black text-4xl mb-1 tracking-tighter uppercase">NICET III</p>
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none">Layout Design Expertise</p>
+                </div>
+                <div class="border-l-4 border-blue-700 pl-6">
+                    <p class="text-blue-800 font-black text-4xl mb-1 tracking-tighter uppercase">PE SEAL</p>
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none"> PE Review</p>
+                </div>
+                <div class="border-l-4 border-slate-300 pl-6">
+                    <p class="text-slate-900 font-black text-4xl mb-1 tracking-tighter uppercase">NFPA</p>
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none">Code-Compliance Expert</p>
+                </div>
+                <div class="border-l-4 border-slate-300 pl-6">
+                    <p class="text-slate-900 font-black text-4xl mb-1 tracking-tighter uppercase">3D BIM</p>
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none">Revit Coordination</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Section (Deep Slate Background) -->
+    <section id="services" class="py-32 bg-slate-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-24 flex flex-col md:flex-row md:items-end md:justify-between text-center md:text-left">
+                <div>
+                    <h2 class="text-5xl font-black text-slate-900 uppercase tracking-tighter">Technical Layout</h2>
+                    <div class="h-2 w-24 brand-gradient mt-6 rounded-full mx-auto md:mx-0"></div>
+                </div>
+                <p class="text-slate-600 max-w-md mt-6 md:mt-0 font-medium italic">
+                    Performance-driven fire protection systems meeting life-safety objectives through code-equivalent design.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-12">
+                <!-- Sprinkler -->
+                <div class="bg-white p-12 rounded-[2.5rem] shadow-sm border border-slate-300 hover:shadow-2xl hover:-translate-y-2 transition-all group">
+                    <div class="w-16 h-16 bg-slate-100 text-slate-700 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-slate-700 group-hover:text-white transition-colors shadow-sm">
+                        <i data-lucide="droplets" size="32"></i>
+                    </div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">Fire Sprinkler Layouts</h3>
+                    <p class="text-slate-500 mb-10 leading-relaxed font-medium">NICET Level III fire protection layout drawings and hydraulic calculations prepared for review and sealing by a licensed Professional Engineer.</p>
+                    <ul class="space-y-5">
+                        <li class="flex items-center text-xs font-black uppercase tracking-widest text-slate-700">
+                            <i data-lucide="check" class="text-slate-500 mr-3 w-4 h-4" stroke-width="4"></i> Wet & Dry Pipe Systems
+                        </li>
+                        <li class="flex items-center text-xs font-black uppercase tracking-widest text-slate-700">
+                            <i data-lucide="check" class="text-slate-500 mr-3 w-4 h-4" stroke-width="4"></i> Hydraulic Calcs
+                        </li>
+                        <li class="flex items-center text-xs font-black uppercase tracking-widest text-slate-700">
+                            <i data-lucide="check" class="text-slate-500 mr-3 w-4 h-4" stroke-width="4"></i>  PE Review
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Alarm -->
+                <div class="bg-white p-12 rounded-[2.5rem] shadow-sm border border-slate-300 hover:shadow-2xl hover:-translate-y-2 transition-all group">
+                    <div class="w-16 h-16 bg-blue-50 text-blue-700 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-blue-700 group-hover:text-white transition-colors shadow-sm">
+                        <i data-lucide="bell" size="32"></i>
+                    </div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">Fire Alarm Layouts</h3>
+                    <p class="text-slate-500 mb-10 leading-relaxed font-medium">Detection and notification layouts with integrated riser diagrams and voltage drop analysis.</p>
+                    <ul class="space-y-5">
+                        <li class="flex items-center text-xs font-black uppercase tracking-widest text-slate-700">
+                            <i data-lucide="check" class="text-blue-700 mr-3 w-4 h-4" stroke-width="4"></i> NFPA 72 Compliance
+                        </li>
+                        <li class="flex items-center text-xs font-black uppercase tracking-widest text-slate-700">
+                            <i data-lucide="check" class="text-blue-700 mr-3 w-4 h-4" stroke-width="4"></i> Device Logic Layout
+                        </li>
+                        <li class="flex items-center text-xs font-black uppercase tracking-widest text-slate-700">
+                            <i data-lucide="check" class="text-blue-700 mr-3 w-4 h-4" stroke-width="4"></i> Code-Compliant Review
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- BIM -->
+                <div class="bg-white p-12 rounded-[2.5rem] shadow-sm border border-slate-300 hover:shadow-2xl hover:-translate-y-2 transition-all group">
+                    <div class="w-16 h-16 bg-slate-800 text-white rounded-2xl flex items-center justify-center mb-10 group-hover:brand-gradient transition-all shadow-lg">
+                        <i data-lucide="layers" size="32"></i>
+                    </div>
+                    <h3 class="text-2xl font-black mb-6 uppercase tracking-tight">3D BIM / Revit</h3>
+                    <p class="text-slate-500 mb-10 leading-relaxed font-medium">Fully coordinated 3D models to ensure fire systems integrate perfectly with structural and other MEP trades.</p>
+                    <ul class="space-y-5">
+                        <li class="flex items-center text-xs font-black uppercase tracking-widest text-slate-700">
+                            <i data-lucide="check" class="text-slate-900 mr-3 w-4 h-4" stroke-width="4"></i> 3D Clash Detection
+                        </li>
+                        <li class="flex items-center text-xs font-black uppercase tracking-widest text-slate-700">
+                            <i data-lucide="check" class="text-slate-900 mr-3 w-4 h-4" stroke-width="4"></i> Navisworks Support
+                        </li>
+                        <li class="flex items-center text-xs font-black uppercase tracking-widest text-slate-700">
+                            <i data-lucide="check" class="text-slate-900 mr-3 w-4 h-4" stroke-width="4"></i> Shop Drawing Export
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Workflow -->
+    <section id="process" class="bg-slate-900 py-32 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-28">
+                <h2 class="text-[10px] font-black uppercase tracking-[0.5em] text-slate-400 mb-6 leading-none">Technical Methodology</h2>
+                <p class="text-5xl md:text-7xl font-black tracking-tighter uppercase">Concept to Permit</p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-12">
+                <div class="relative pt-12 border-t-2 border-slate-700">
+                    <span class="absolute top-0 left-0 -translate-y-1/2 text-9xl font-black text-slate-800 select-none">01</span>
+                    <h4 class="text-xl font-black mb-4 relative uppercase tracking-widest">Project Intake</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed uppercase tracking-widest font-bold">Architectural backgrounds, occupancy classification, hazard evaluation</p>
+                </div>
+                <div class="relative pt-12 border-t-2 border-slate-500">
+                    <span class="absolute top-0 left-0 -translate-y-1/2 text-9xl font-black text-slate-800 select-none">02</span>
+                    <h4 class="text-xl font-black mb-4 relative uppercase tracking-widest text-slate-200">Fire Protection Layout</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed uppercase tracking-widest font-bold">NICET Level III layout drawings based on applicable NFPA standards</p>
+                </div>
+                <div class="relative pt-12 border-t-2 border-slate-700">
+                    <span class="absolute top-0 left-0 -translate-y-1/2 text-9xl font-black text-slate-800 select-none">03</span>
+                    <h4 class="text-xl font-black mb-4 relative uppercase tracking-tight">Interdisciplinary Coordination</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed uppercase tracking-widest font-bold">Multi-trade coordination to resolve spatial and system conflicts</p>
+                </div>
+                <div class="relative pt-12 border-t-2 border-blue-700">
+                    <span class="absolute top-0 left-0 -translate-y-1/2 text-9xl font-black text-blue-950 select-none">04</span>
+                    <h4 class="text-xl font-black mb-4 relative uppercase tracking-tight text-blue-500">Professional Engineer Review</h4>
+                    <p class="text-slate-400 text-xs leading-relaxed uppercase tracking-widest font-bold">Review and sealing by a state-licensed Professional Engineer, where required by the AHJ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Design Estimator -->
+    <section id="estimator" class="py-32 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-16 text-center">
+                 <h2 class="text-5xl font-black text-slate-900 uppercase tracking-tighter">Instant Estimate</h2>
+                 <div class="h-2 w-24 brand-gradient mt-6 rounded-full mx-auto"></div>
+                 <p class="text-slate-600 max-w-2xl mx-auto mt-6 font-medium italic">
+                    Calculate a preliminary cost range for your fire protection layout needs immediately.
+                 </p>
+            </div>
+
+            <div class="flex justify-center">
+                <!-- Calculator Component -->
+                <div class="calc-card w-full max-w-xl p-8 md:p-12">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-black text-slate-900 tracking-tighter uppercase">Design Estimator</h2>
+                        <div class="h-1.5 w-16 brand-gradient mt-2 rounded-full"></div>
+                    </div>
+            
+                    <div class="space-y-6">
+                        <!-- Building Type Dropdown -->
+                        <div class="space-y-3">
+                            <label class="block font-black text-[10px] uppercase tracking-widest text-slate-400">Building Classification</label>
+                            <div class="relative">
+                                <select id="building-select" class="calc-select w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-slate-900 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition cursor-pointer">
+                                    <option value="1.0">Residential (Single/Multi-family)</option>
+                                    <option value="1.25">Mixed-Use Development</option>
+                                    <option value="1.4">Commercial (Office/Retail)</option>
+                                    <option value="1.5">Warehouse / Storage Facility</option>
+                                    <option value="1.7">Industrial / High-Hazard</option>
+                                </select>
+                            </div>
+                        </div>
+            
+                        <!-- Square Footage -->
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-end">
+                                <label class="font-black text-[10px] uppercase tracking-widest text-slate-400">Total System Area</label>
+                                <div>
+                                    <span class="text-3xl font-black text-slate-900" id="sqft-display">10,000</span>
+                                    <span class="text-[10px] font-black text-slate-400 uppercase ml-1">SQFT</span>
+                                </div>
+                            </div>
+                            <input type="range" id="sqft-slider" min="500" max="100000" step="500" value="10000" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-700">
+                        </div>
+            
+                        <!-- Standard Selection -->
+                        <div class="space-y-3">
+                            <label class="block font-black text-[10px] uppercase tracking-widest text-slate-400">System Standard</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <label class="radio-option standard-type active" data-val="0.85">
+                                    <input type="radio" name="standard" checked> NFPA 13D
+                                </label>
+                                <label class="radio-option standard-type" data-val="1.0">
+                                    <input type="radio" name="standard"> NFPA 13R
+                                </label>
+                                <label class="radio-option standard-type" data-val="1.4">
+                                    <input type="radio" name="standard"> NFPA 13
+                                </label>
+                            </div>
+                        </div>
+            
+                        <!-- Add-ons -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="flex items-center justify-between p-4 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-slate-700 text-[10px] uppercase">PE Seal</span>
+                                    <span class="text-[8px] text-slate-400 font-bold uppercase">Stamped Review</span>
+                                </div>
+                                <input type="checkbox" id="pe-seal" class="w-5 h-5 rounded accent-blue-700">
+                            </label>
+                            <label class="flex items-center justify-between p-4 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-slate-700 text-[10px] uppercase">48H Rush</span>
+                                    <span class="text-[8px] text-blue-600 font-black tracking-tighter uppercase">Guaranteed</span>
+                                </div>
+                                <input type="checkbox" id="rush" class="w-5 h-5 rounded accent-blue-700">
+                            </label>
+                        </div>
+            
+                        <!-- Result -->
+                        <div class="brand-gradient rounded-3xl p-8 text-center shadow-xl">
+                            <p class="text-[9px] font-black uppercase tracking-[0.4em] text-white/60 mb-1">Estimated Layout Fee</p>
+                            <p class="text-5xl font-black text-white tracking-tighter" id="final-price">$0.00</p>
+                            <p id="breakdown" class="text-[8px] uppercase tracking-widest text-blue-200 mt-3 font-bold"></p>
+                        </div>
+            
+                        <p class="text-[9px] text-slate-400 text-center uppercase tracking-widest leading-relaxed">
+                            *Preliminary estimate only. Final pricing based on <br> architectural complexity and AHJ requirements.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-40 bg-slate-100 text-slate-900 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-24 items-center">
+            <div>
+                <h2 class="text-6xl font-black text-slate-900 uppercase tracking-tighter mb-10 leading-[0.9]">Start Your <br><span class="text-blue-800">Project</span></h2>
+                
+                <p class="text-xl text-slate-500 mb-16 leading-relaxed font-medium">
+                    Submit your project requirements today for a technical layout estimate. Our team provides expedited, code-compliant fire protection submittal packages coordinated for Professional Engineer review to streamline the permit process.
+                </p>
+                
+                <div class="space-y-10">
+                    <div class="flex items-start space-x-6">
+                        <div class="bg-white p-5 rounded-2xl text-slate-700 shadow-sm border border-slate-200"><i data-lucide="mail" size="32"></i></div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Direct Communication:</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tight">gperalta@cmbfireprotection.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-6">
+                        <div class="bg-blue-50 p-5 rounded-2xl text-blue-700 shadow-sm border border-blue-100"><i data-lucide="phone" size="32"></i></div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Inquiry Hotline:</p>
+                            <p class="text-2xl font-black text-slate-900 tracking-tight">732-343-5828</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Intake Form (Google Forms Embed) -->
+            <div class="bg-white p-4 rounded-[3rem] border border-slate-300 shadow-inner h-[800px] overflow-hidden">
+                <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSdRnDmU2tKHfqm8SKFWdqerHGblIsUFkrDwBfOzRjsWimEgXQ/viewform?embedded=true" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0"
+                    class="w-full h-full rounded-[2rem]">
+                    Loading form...
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 py-24 text-slate-500 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex flex-col items-center mb-12">
+                <!-- Footer Logo -->
+                <div class="p-4 rounded-xl mb-8 shadow-lg" style="background-color: #99adc4;">
+                    <img src="logo.png" alt="CMB Fire Protection" class="h-24 w-auto object-contain logo-blend" 
+                          onerror="const p=this.parentElement; if(p){p.style.display='none'; if(p.nextElementSibling)p.nextElementSibling.style.display='block';}">
+                </div>
+                <div class="hidden bg-blue-800 p-2 rounded-lg mb-6">
+                    <i data-lucide="shield" class="h-8 w-8 text-white"></i>
+                </div>
+                <p class="text-slate-400 max-w-lg mx-auto leading-relaxed font-medium mb-12">NICET Level III fire protection layout services coordinated with Licensed Professional Engineer review and sealing.</p>
+                
+                <div class="flex justify-center space-x-12 text-[10px] font-black uppercase tracking-[0.3em] text-slate-700">
+                    <span class="text-slate-600">Certified Accuracy</span>
+                    <span class="text-slate-700">•</span>
+                    <span class="text-blue-700">PE Partnered Review</span>
+                </div>
+            </div>
+            
+            <p class="text-[9px] uppercase tracking-widest text-slate-800 border-t border-slate-900 pt-12 italic">© 2024 Professional Design & Layout by CMB Fire Protection. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('mobile-menu');
+        
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // --- CALCULATOR LOGIC ---
+        const slider = document.getElementById('sqft-slider');
+        const display = document.getElementById('sqft-display');
+        const buildingSelect = document.getElementById('building-select');
+        const peSeal = document.getElementById('pe-seal');
+        const rush = document.getElementById('rush');
+        const finalPrice = document.getElementById('final-price');
+        const breakdown = document.getElementById('breakdown');
+        
+        const standardRadios = document.querySelectorAll('.standard-type');
+
+        // References to specific standard options
+        const opt13d = document.querySelector('label[data-val="0.85"]');
+        const opt13r = document.querySelector('label[data-val="1.0"]');
+        const opt13 = document.querySelector('label[data-val="1.4"]');
+
+        let standardMultiplier = 0.85;
+
+        // Handle Standard selection
+        standardRadios.forEach(r => {
+            r.addEventListener('click', () => {
+                if(r.classList.contains('disabled')) return; // Prevent clicking disabled
+                
+                standardRadios.forEach(x => x.classList.remove('active'));
+                r.classList.add('active');
+                r.querySelector('input').checked = true;
+                standardMultiplier = parseFloat(r.dataset.val);
+                calculate();
+            });
+        });
+
+        function updateOptions() {
+            const isResidential = buildingSelect.value === '1.0';
+            
+            if (!isResidential) {
+                // Disable 13D and 13R
+                [opt13d, opt13r].forEach(el => {
+                    el.classList.add('disabled');
+                    el.querySelector('input').disabled = true;
+                });
+                
+                // If we are currently on 13D or 13R, switch to 13
+                if (opt13d.classList.contains('active') || opt13r.classList.contains('active')) {
+                     // Manually set 13 active
+                    standardRadios.forEach(x => x.classList.remove('active'));
+                    opt13.classList.add('active');
+                    opt13.querySelector('input').checked = true;
+                    standardMultiplier = parseFloat(opt13.dataset.val);
+                }
+            } else {
+                // Enable All
+                 [opt13d, opt13r].forEach(el => {
+                    el.classList.remove('disabled');
+                    el.querySelector('input').disabled = false;
+                });
+            }
+        }
+
+        function calculate() {
+            const sqft = parseInt(slider.value);
+            const buildingMultiplier = parseFloat(buildingSelect.value);
+            display.innerText = sqft.toLocaleString();
+
+            // Updated Pricing Logic (More Attractive)
+            let baseRate = 0.15; // Started at 0.18
+            if (sqft > 15000) baseRate = 0.12; 
+            if (sqft > 40000) baseRate = 0.09;
+
+            // Combine base rate, building type complexity, and system standard
+            let total = (sqft * baseRate) * buildingMultiplier * standardMultiplier;
+            
+            // Reduced Minimum project fee
+            if (total < 550) total = 550;
+
+            let notes = [];
+            if (peSeal.checked) { 
+                total += 950; // Reduced from 1250
+                notes.push("PE Review Included"); 
+            }
+            if (rush.checked) { 
+                total *= 1.25; // Reduced from 1.45
+                notes.push("48-Hour Priority Rush"); 
+            }
+
+            finalPrice.innerText = "$" + total.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            breakdown.innerText = notes.join(" • ");
+        }
+
+        slider.oninput = calculate;
+        buildingSelect.onchange = () => {
+            updateOptions();
+            calculate();
+        };
+        peSeal.onchange = calculate;
+        rush.onchange = calculate;
+        
+        // Initial Calculation
+        updateOptions();
+        calculate();
+    </script>
+</body>
+
+</html></head>
 <body class="bg-slate-100 text-slate-900">
 
     <!-- Navigation (Header with #99adc4 Background) -->
@@ -378,3 +945,4 @@
 </body>
 
 </html>
+
