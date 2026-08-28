@@ -529,14 +529,14 @@
                     <div class="bg-white p-5 rounded-2xl text-slate-700 shadow-sm border border-slate-200"><i data-lucide="mail" size="32"></i></div>
                     <div>
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Direct Communication:</p>
-                        <p class="text-2xl font-black text-slate-900 tracking-tight">gperalta@cmbfireprotection.com</p>
+                        <p class="text-2xl font-black text-slate-900 tracking-tight">ebencosme@cmbfireprotection.com</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-center space-y-4">
                     <div class="bg-blue-50 p-5 rounded-2xl text-blue-700 shadow-sm border border-blue-100"><i data-lucide="phone" size="32"></i></div>
                     <div>
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Inquiry Hotline:</p>
-                        <p class="text-2xl font-black text-slate-900 tracking-tight">732-343-5828</p>
+                        <p class="text-2xl font-black text-slate-900 tracking-tight">856-462-9740</p>
                     </div>
                 </div>
             </div>
@@ -564,7 +564,7 @@
                 </div>
             </div>
             
-            <p class="text-[9px] uppercase tracking-widest text-slate-800 border-t border-slate-900 pt-12 italic">© 2024 Professional Design & Layout by CMB Fire Protection. All rights reserved.</p>
+            <p class="text-[9px] uppercase tracking-widest text-slate-800 border-t border-slate-900 pt-12 italic">© 2026 Professional Design & Layout by CMB Fire Protection. All rights reserved.</p>
         </div>
     </footer>
 
@@ -627,9 +627,9 @@
                     // NFPA 13D: 2-3 Family
                     // If 0-50 heads, use promo price ($750). Else standard flat ($1500).
                     if (heads <= 50) {
-                        baseTotal = 750;
+                        baseTotal = 500;
                     } else {
-                        baseTotal = 1500;
+                        baseTotal = 1000;
                     }
                 } else {
                     // 13R & 13 Tiered Table
@@ -639,22 +639,22 @@
                         if (standardValue === '13r') {
                             baseTotal = 1000;
                         } else {
-                            baseTotal = 2000;
+                            baseTotal = 1250;
                         }
                     } else if (heads <= 100) {
-                        baseTotal = 2500;
+                        baseTotal = 1250;
                     } else if (heads <= 300) {
-                        baseTotal = 3000;
+                        baseTotal = 1800;
                     } else if (heads <= 500) {
-                        baseTotal = 4000;
+                        baseTotal = 2000;
                     } else if (heads <= 750) {
-                        baseTotal = 5000;
+                        baseTotal = 2300;
                     } else if (heads <= 1000) {
-                        baseTotal = 6000;
+                        baseTotal = 2500;
                     } else {
-                        // Over 1000 heads: $4/head
+                        // Over 1000 heads: $3/head
                         // Safety: Ensures price doesn't drop below the previous tier ($6000)
-                        baseTotal = Math.max(6000, heads * 4);
+                        baseTotal = Math.max(2500, heads * 3);
                     }
                 }
             }
